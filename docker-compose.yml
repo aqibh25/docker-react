@@ -1,0 +1,23 @@
+version: '3'
+services:
+  web: 
+    environment: 
+      - WATCHPACK_POLLING=true 
+    build: 
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "3000:3000"
+    volumes:
+      - /app/node_modules # this means dont mapp node_modules folder inside the container to a node_modules outside the container
+      - .:/app # basically means the current folder outside the container map it to a folder called app inside the container
+  tests:
+    environment: 
+      - WATCHPACK_POLLING=true
+    build: 
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - /app/node_modules
+      - .:/app
+    command: ["npm", "run", "test"]
