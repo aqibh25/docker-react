@@ -1,0 +1,10 @@
+language: generic 
+sudo: required #this gives you super user permissions
+services:
+  - docker # adding a copy of docker in a running container
+
+before_install: # so before the project gets deployed
+  - docker build -t tag/docker-react -f Dockfile.dev .
+
+script:
+  - docker run -e CI=true tag/docker-react npm run test
